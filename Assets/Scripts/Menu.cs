@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,11 @@ public class Menu : MonoBehaviour
         
     }
 
+    public void SetPlayerName(string value)
+    {
+        DataManager.Instance.playerName = value;
+    }
+
     public void Exit()
     {
 #if UNITY_EDITOR
@@ -30,6 +36,13 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        if(DataManager.Instance.playerName == "")
+        {
+            Debug.Log("Enter name!");
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+        }    
     }
 }
