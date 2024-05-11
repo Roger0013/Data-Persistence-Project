@@ -12,11 +12,14 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text highScoreText;
     public GameObject GameOverText;
     public TextMeshProUGUI playerNameText;
     
     private bool m_Started = false;
     private int m_Points;
+    private int highScore;
+    private string highScoreName;
     
     private bool m_GameOver = false;
 
@@ -28,6 +31,10 @@ public class MainManager : MonoBehaviour
         int perLine = Mathf.FloorToInt(4.0f / step);
 
         playerNameText.text = DataManager.Instance.playerName;
+        DataManager.PlayerScore highScoreData = DataManager.Instance.GetBestScore();
+        highScore = highScoreData.score;
+        highScoreName = highScoreData.name;
+        UpdateHighScoreText(highScoreName, highScore);
         
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
@@ -70,11 +77,26 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+        if (m_Points > highScore)
+        {
+            UpdateHighScoreText(DataManager.Instance.playerName, m_Points);
+        }
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        DataManager.Instance.UpdateScores(m_Points);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    private void UpdateHighScoreText(string name,int score)
+    {
+        highScoreText.text = "Best Score : " + name + " : " + score;
     }
 }

@@ -26,8 +26,12 @@ public class Menu : MonoBehaviour
 
     public void Exit()
     {
+        if (DataManager.Instance.playerName != "")
+        {
+            DataManager.Instance.SaveScores();
+        }
 #if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
+            EditorApplication.ExitPlaymode();
 #else
         Application.Quit(); // original code to quit Unity player
 #endif
