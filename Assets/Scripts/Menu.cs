@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField] TMP_InputField playerNameField;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (DataManager.Instance.playerName != "")
+        {
+            playerNameField.text = DataManager.Instance.playerName;
+        }
     }
 
     // Update is called once per frame
@@ -48,5 +53,10 @@ public class Menu : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }    
+    }
+
+    public void HighScores()
+    {
+        SceneManager.LoadScene(2);
     }
 }
