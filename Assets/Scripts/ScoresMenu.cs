@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,16 +15,18 @@ public class ScoresMenu : MonoBehaviour
     void Start()
     {
         scoresText.text = "";
-        foreach (KeyValuePair<string, int> item in DataManager.Instance.scores)
+        int line = 1;
+        foreach (KeyValuePair<string, int> item in DataManager.Instance.scores.OrderBy(key => -key.Value))
         {
             if(item.Key == DataManager.Instance.playerName)
             {
-                scoresText.text += "<color=red>" + item.Key + ": " + item.Value + "</color>\n";
+                scoresText.text += "<color=red>" + line + ". " + item.Key + ": " + item.Value + "</color>\n";
             }
             else
             {
-                scoresText.text += item.Key + ": " + item.Value + "\n";
+                scoresText.text += line + ". " + item.Key + ": " + item.Value + "\n";
             }
+            line++;
         }
     }
 
