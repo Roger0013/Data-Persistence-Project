@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] TMP_InputField playerNameField;
+    [SerializeField] TextMeshProUGUI nameAlert;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +48,8 @@ public class Menu : MonoBehaviour
     {
         if(DataManager.Instance.playerName == "")
         {
-            Debug.Log("Enter name!");
+            nameAlert.gameObject.SetActive(true);
+            StartCoroutine(DisableAlert());
         }
         else
         {
@@ -58,5 +60,11 @@ public class Menu : MonoBehaviour
     public void HighScores()
     {
         SceneManager.LoadScene(2);
+    }
+
+    IEnumerator DisableAlert()
+    {
+        yield return new WaitForSeconds(3);
+        nameAlert.gameObject.SetActive(false);
     }
 }

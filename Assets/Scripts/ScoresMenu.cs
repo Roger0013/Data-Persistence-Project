@@ -30,12 +30,6 @@ public class ScoresMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
